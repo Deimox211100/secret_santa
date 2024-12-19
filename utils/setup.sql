@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS "secret-santa".users (
     link_deseo2 TEXT,
     deseo3 TEXT,
     link_deseo3 TEXT,
-    estacion VARCHAR(50) NOT NULL UNIQUE
+    estacion VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
 );
 
 COMMIT;
