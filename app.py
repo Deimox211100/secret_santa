@@ -67,8 +67,8 @@ def start_page():
 
         if st.button("Iniciar Sesión ➡️", use_container_width =True):
             set_page("login")
-        if st.button("Registrarse 📝", use_container_width =True):
-            set_page("register")
+        # if st.button("Registrarse 📝", use_container_width =True):
+        #     set_page("register")
 
 
 # Función principal de la aplicación
@@ -83,9 +83,9 @@ def main():
     elif st.session_state.page == "login":
         login_page = LoginPage()
         login_page.run()
-    elif st.session_state.page == "register":
-        register_page = RegisterPage()
-        register_page.run()
+    # elif st.session_state.page == "register":
+    #     register_page = RegisterPage()
+    #     register_page.run()
     elif st.session_state.page == "home":
         home_page = HomePage()
         home_page.run()

@@ -111,9 +111,9 @@ class ProfilePage:
             link_deseo3_edit = st.text_input("Link del Deseo 3", value=link_deseo3)
 
             # Save button
-            if st.button("Guardar Cambios"):
-                self.update_user_info(username, deseo1_edit, link_deseo1_edit, deseo2_edit, link_deseo2_edit,
-                                      deseo3_edit, link_deseo3_edit)
+            # if st.button("Guardar Cambios"):
+            #     self.update_user_info(username, deseo1_edit, link_deseo1_edit, deseo2_edit, link_deseo2_edit,
+            #                           deseo3_edit, link_deseo3_edit)
 
             if st.button("Volver", use_container_width=True):
                 st.session_state.page = "home"
