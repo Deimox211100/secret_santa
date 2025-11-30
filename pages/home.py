@@ -46,7 +46,7 @@ class HomePage:
             st.write(' ')
         with col2:
             st.image(
-                "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2Vnb2dmcDBkMnNpNHN5cG9vYm55NDY2MG8wdzRwNjlsbDU3ZWk4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VKwspRV2pafJu/giphy.gif",
+                "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzBoZWhsNjBhMnBleTIxdnJoczd5ZW05d2JiYjZmeTFqbHUxNm5pMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HBMCmtsPEUShG/giphy.gif",
                 use_container_width=True
             )
         with col3:

@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: secret-santa-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-secret_santa}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      ADMIN_PWD: ${ADMIN_PWD:-admin123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./utils/init_db.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./utils/setup.sql:/docker-entrypoint-initdb.d/02-setup.sql
+      - ./utils/03-init-admin.sh:/docker-entrypoint-initdb.d/03-init-admin.sh
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    networks:
+      - secret-santa-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Streamlit Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: secret-santa-app
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_NAME: ${DB_NAME:-secret_santa}
+      DB_PORT: 5432
+    ports:
+      - "${APP_PORT:-8501}:8501"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - secret-santa-network
+    volumes:
+      - ./config.json:/app/config.json
+      - ./utils/simpsons_characters.json:/app/utils/simpsons_characters.json
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  secret-santa-network:
+    driver: bridge

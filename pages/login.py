@@ -65,19 +65,30 @@ class LoginPage:
         if connection:
             try:
                 with connection.cursor() as cursor:
-                    # Verificar si el usuario existe y la contraseña es correcta
+                    # Check if admin
                     cursor.execute("""
-                    SELECT * FROM "secret-santa".users WHERE estacion = %s AND password = %s
+                    SELECT * FROM "secret-santa".admin WHERE username = %s AND password = %s
+                    """, (username, password))
+                    admin = cursor.fetchone()
+                    if admin:
+                        return {'is_admin': True, 'username': username}
+                    
+                    # Check if regular user
+                    cursor.execute("""
+                    SELECT * FROM "secret-santa".users WHERE character_name = %s AND password = %s
                     """, (username, password))
                     user = cursor.fetchone()
-                    return user is not None
+                    if user:
+                        return {'is_admin': False, 'username': username}
+                    
+                    return None
             except (Exception, Error) as e:
                 st.error(f"Error al verificar las credenciales: {e}")
-                return False
+                return None
             finally:
                 if connection:
                     connection.close()
-        return False
+        return None
 
     def render_login_page(self):
         """Renderizar la página de login."""
@@ -100,24 +111,29 @@ class LoginPage:
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
             # Campos de formulario de login
-            username = st.text_input("Nombre de Usuario")
+            username = st.text_input("Personaje")
             password = st.text_input("Contraseña", type="password")
 
             if st.button("Iniciar Sesión", use_container_width=True):
                 if username and password:
                     # Verificar las credenciales
-                    if self.check_credentials(username, password):
+                    result = self.check_credentials(username, password)
+                    if result:
                         # Establecer estado de sesión
                         st.session_state.logged_in = True
-                        st.session_state.username = username
+                        st.session_state.username = result['username']
+                        st.session_state.is_admin = result['is_admin']
 
-                        # Cambiar a la página de inicio
-                        st.session_state.page = "home"
+                        # Cambiar a la página correspondiente
+                        if result['is_admin']:
+                            st.session_state.page = "admin"
+                        else:
+                            st.session_state.page = "home"
                         st.rerun()
                     else:
                         st.error("Credenciales incorrectas.")
                 else:
-                    st.error("Por favor ingresa tu nombre de usuario y contraseña.")
+                    st.error("Por favor ingresa tu personaje y contraseña.")
 
             # Botón para volver al inicio
             if st.button("Volver", use_container_width=True):

@@ -1,0 +1,122 @@
+[
+    {
+        "name": "Homer Simpson",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/b/bd/Homer_Simpson.png"
+    },
+    {
+        "name": "Marge Simpson",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/0/0b/Marge_Simpson.png"
+    },
+    {
+        "name": "Bart Simpson",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/a/aa/Bart_Simpson.png"
+    },
+    {
+        "name": "Lisa Simpson",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/e/ec/Lisa_Simpson.png"
+    },
+    {
+        "name": "Maggie Simpson",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/9/9d/Maggie_Simpson.png"
+    },
+    {
+        "name": "Ned Flanders",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/c/cf/Ned_Flanders.png"
+    },
+    {
+        "name": "Moe Szyslak",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/8/88/Moe_Szyslak.png"
+    },
+    {
+        "name": "Barney Gumble",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/d/de/Barney_Gumble.png"
+    },
+    {
+        "name": "Apu Nahasapeemapetilon",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/3/3c/Apu_Nahasapeemapetilon.png"
+    },
+    {
+        "name": "Chief Wiggum",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/e/ec/Chief_Wiggum.png"
+    },
+    {
+        "name": "Mr. Burns",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/5/56/Mr_Burns.png"
+    },
+    {
+        "name": "Waylon Smithers",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/6/6e/Waylon_Smithers.png"
+    },
+    {
+        "name": "Krusty the Clown",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/6/68/Krusty_the_Clown.png"
+    },
+    {
+        "name": "Sideshow Bob",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/5/5a/Sideshow_Bob.png"
+    },
+    {
+        "name": "Milhouse Van Houten",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/1/11/Milhouse_Van_Houten.png"
+    },
+    {
+        "name": "Nelson Muntz",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/a/ac/Nelson_Muntz.png"
+    },
+    {
+        "name": "Ralph Wiggum",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/1/14/Ralph_Wiggum.png"
+    },
+    {
+        "name": "Groundskeeper Willie",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/8/8f/Groundskeeper_Willie.png"
+    },
+    {
+        "name": "Principal Skinner",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/f/fe/Seymour_Skinner.png"
+    },
+    {
+        "name": "Edna Krabappel",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/8/8b/Edna_Krabappel.png"
+    },
+    {
+        "name": "Otto Mann",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/7/7d/Otto_Mann.png"
+    },
+    {
+        "name": "Comic Book Guy",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/e/e9/Comic_Book_Guy.png"
+    },
+    {
+        "name": "Professor Frink",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/5/5a/Professor_Frink.png"
+    },
+    {
+        "name": "Dr. Hibbert",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/9/9e/Dr._Hibbert.png"
+    },
+    {
+        "name": "Lenny Leonard",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/8/84/Lenny_Leonard.png"
+    },
+    {
+        "name": "Carl Carlson",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/a/a7/Carl_Carlson.png"
+    },
+    {
+        "name": "Kent Brockman",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/9/9c/Kent_Brockman.png"
+    },
+    {
+        "name": "Mayor Quimby",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/c/c8/Mayor_Quimby.png"
+    },
+    {
+        "name": "Patty Bouvier",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/b/ba/Patty_Bouvier.png"
+    },
+    {
+        "name": "Selma Bouvier",
+        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/d/d6/Selma_Bouvier.png"
+    }
+]

@@ -59,8 +59,8 @@ class ProfilePage:
             try:
                 with connection.cursor() as cursor:
                     cursor.execute("""
-                    SELECT estacion, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3 
-                    FROM "secret-santa".users WHERE estacion = %s
+                    SELECT character_name, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, wishes_locked 
+                    FROM "secret-santa".users WHERE character_name = %s
                     """, (username,))
                     return cursor.fetchone()
             except (Exception, Error) as e:
@@ -79,7 +79,7 @@ class ProfilePage:
                     cursor.execute("""
                     UPDATE "secret-santa".users
                     SET deseo1 = %s, link_deseo1 = %s, deseo2 = %s, link_deseo2 = %s, deseo3 = %s, link_deseo3 = %s
-                    WHERE estacion = %s
+                    WHERE character_name = %s
                     """, (deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, username))
                     connection.commit()
                     st.success("Información actualizada exitosamente.")
@@ -97,23 +97,28 @@ class ProfilePage:
         user_info = self.get_user_info(username)
 
         if user_info:
-            estacion, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3 = user_info
+            character_name, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, wishes_locked = user_info
+
+            # Check if wishes are locked
+            if wishes_locked:
+                st.warning("⚠️ La edición de deseos está bloqueada por el administrador.")
 
             # Display editable fields
             st.subheader("🎁 Tus Deseos:")
-            deseo1_edit = st.text_input("Deseo 1", value=deseo1)
-            link_deseo1_edit = st.text_input("Link del Deseo 1", value=link_deseo1)
+            deseo1_edit = st.text_input("Deseo 1", value=deseo1, disabled=wishes_locked)
+            link_deseo1_edit = st.text_input("Link del Deseo 1", value=link_deseo1, disabled=wishes_locked)
 
-            deseo2_edit = st.text_input("Deseo 2", value=deseo2)
-            link_deseo2_edit = st.text_input("Link del Deseo 2", value=link_deseo2)
+            deseo2_edit = st.text_input("Deseo 2", value=deseo2, disabled=wishes_locked)
+            link_deseo2_edit = st.text_input("Link del Deseo 2", value=link_deseo2, disabled=wishes_locked)
 
-            deseo3_edit = st.text_input("Deseo 3", value=deseo3)
-            link_deseo3_edit = st.text_input("Link del Deseo 3", value=link_deseo3)
+            deseo3_edit = st.text_input("Deseo 3", value=deseo3, disabled=wishes_locked)
+            link_deseo3_edit = st.text_input("Link del Deseo 3", value=link_deseo3, disabled=wishes_locked)
 
-            # Save button
-            # if st.button("Guardar Cambios"):
-            #     self.update_user_info(username, deseo1_edit, link_deseo1_edit, deseo2_edit, link_deseo2_edit,
-            #                           deseo3_edit, link_deseo3_edit)
+            # Save button (only if wishes not locked)
+            if not wishes_locked:
+                if st.button("Guardar Cambios", use_container_width=True):
+                    self.update_user_info(username, deseo1_edit, link_deseo1_edit, deseo2_edit, link_deseo2_edit,
+                                          deseo3_edit, link_deseo3_edit)
 
             if st.button("Volver", use_container_width=True):
                 st.session_state.page = "home"
@@ -134,5 +139,5 @@ def main():
 if __name__ == "__main__":
     # Simulate user session (replace with actual login logic)
     if 'username' not in st.session_state:
-        st.session_state.username = "EstacionEjemplo"  # Cambia por el username real
+        st.session_state.username = "Homer Simpson"  # Cambia por el username real
     main()

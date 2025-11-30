@@ -60,13 +60,16 @@ class RegisterPage:
         if 'form_data' not in st.session_state:
             st.session_state.form_data = {
                 'nombre': '',
-                'apellido': '',
+                'email': '',
                 'deseo1': '',
                 'link_deseo1': '',
+                'imagen_deseo1': '',
                 'deseo2': '',
                 'link_deseo2': '',
+                'imagen_deseo2': '',
                 'deseo3': '',
                 'link_deseo3': '',
+                'imagen_deseo3': '',
                 'username': None,
                 'password': ''
             }
@@ -80,34 +83,45 @@ class RegisterPage:
             st.error(f"Error connecting to the PostgreSQL database: {e}")
             return None
 
-    def load_stations(self):
-        """Load available stations from JSON file."""
+    def load_characters(self):
+        """Load available characters from the configured characters file."""
         try:
-            with open(os.path.join(os.path.dirname(__file__), "../utils/stations.json"), "r", encoding='utf-8') as f:
-                return json.load(f)
-        except FileNotFoundError:
-            st.error("Stations file not found.")
+            from utils.config_loader import load_characters
+            characters_data = load_characters()
+            return characters_data
+        except FileNotFoundError as e:
+            st.error(f"Characters file not found: {e}")
             return []
-        except json.JSONDecodeError:
-            st.error("Error decoding stations JSON file.")
+        except Exception as e:
+            st.error(f"Error loading characters: {e}")
             return []
 
-    def get_selected_stations(self):
-        """Retrieve already selected stations from the database."""
+    def get_selected_characters(self):
+        """Retrieve already selected characters from the database."""
         connection = self.connect_to_db()
         if connection:
             try:
                 with connection.cursor() as cursor:
-                    cursor.execute('SELECT estacion FROM "secret-santa".users')
-                    selected_stations = [row[0] for row in cursor.fetchall()]
-                return selected_stations
+                    cursor.execute('SELECT character_name FROM "secret-santa".users')
+                    selected_characters = [row[0] for row in cursor.fetchall()]
+                return selected_characters
             except (Exception, Error) as e:
-                st.error(f"Error retrieving selected stations: {e}")
+                st.error(f"Error retrieving selected characters: {e}")
                 return []
             finally:
                 if connection:
                     connection.close()
         return []
+
+    def is_valid_email(self, email):
+        """Validate email format."""
+        if not email:
+            return False
+        
+        email_pattern = re.compile(
+            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        )
+        return email_pattern.match(email) is not None
 
     def is_valid_url(self, url):
         """Validate URL format."""
@@ -130,14 +144,16 @@ class RegisterPage:
 
         if not data['nombre']:
             errors.append("El nombre es obligatorio.")
-        if not data['apellido']:
-            errors.append("El apellido es obligatorio.")
+        if not data['email']:
+            errors.append("El correo electrónico es obligatorio.")
+        elif not self.is_valid_email(data['email']):
+            errors.append("El correo electrónico no es válido.")
         if not data['deseo1']:
             errors.append("El Deseo #1 es obligatorio.")
         if not data['deseo2']:
             errors.append("El Deseo #2 es obligatorio.")
         if not data['username']:
-            errors.append("Debes seleccionar una estación.")
+            errors.append("Debes seleccionar un personaje.")
         if not data['password']:  # Check if password is provided
             errors.append("La contraseña es obligatoria.")
 
@@ -164,9 +180,9 @@ class RegisterPage:
                 with connection.cursor() as cursor:
                     insert_query = """
                     INSERT INTO "secret-santa".users 
-                    (nombre, apellido, deseo1, link_deseo1, deseo2, link_deseo2, 
-                     deseo3, link_deseo3, estacion, password)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    (nombre, email, deseo1, link_deseo1, imagen_deseo1, deseo2, link_deseo2, imagen_deseo2,
+                     deseo3, link_deseo3, imagen_deseo3, character_name, character_photo_url, password)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     """
                     cursor.execute(insert_query, data)
                     connection.commit()
@@ -199,11 +215,12 @@ class RegisterPage:
         # Contenedor para centrar los formularios y botones
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            # Load stations
-            all_stations = self.load_stations()
-            selected_stations = self.get_selected_stations()
-            available_stations = [station for station in all_stations
-                                  if station not in selected_stations]
+            # Load characters
+            all_characters = self.load_characters()
+            selected_characters = self.get_selected_characters()
+            selected_character_names = [char['name'] for char in selected_characters] if selected_characters and isinstance(selected_characters[0], dict) else selected_characters
+            available_characters = [char for char in all_characters
+                                   if char['name'] not in selected_character_names]
 
             # Prepare form data from session state
             form_data = st.session_state.form_data
@@ -213,30 +230,55 @@ class RegisterPage:
                 nombre = st.text_input("Nombre",
                                        max_chars=100,
                                        value=form_data['nombre'])
-                apellido = st.text_input("Apellido",
-                                         max_chars=100,
-                                         value=form_data['apellido'])
+                email = st.text_input("Correo Electrónico",
+                                         max_chars=255,
+                                         value=form_data['email'],
+                                         placeholder="ejemplo@correo.com")
+                
+                st.markdown("### 🎁 Deseo #1")
                 deseo1 = st.text_input("Deseo #1",
-                                       value=form_data['deseo1'])
-                link_deseo1 = st.text_input("Link Deseo #1",
+                                       value=form_data['deseo1'],
+                                       label_visibility="collapsed")
+                link_deseo1 = st.text_input("Link Deseo #1 (Opcional)",
                                             value=form_data['link_deseo1'])
+                imagen_deseo1 = st.text_input("URL de Imagen Deseo #1 (Opcional)",
+                                             value=form_data['imagen_deseo1'],
+                                             placeholder="https://ejemplo.com/imagen.jpg")
+                
+                st.markdown("### 🎁 Deseo #2")
                 deseo2 = st.text_input("Deseo #2",
-                                       value=form_data['deseo2'])
-                link_deseo2 = st.text_input("Link Deseo #2",
+                                       value=form_data['deseo2'],
+                                       label_visibility="collapsed")
+                link_deseo2 = st.text_input("Link Deseo #2 (Opcional)",
                                             value=form_data['link_deseo2'])
+                imagen_deseo2 = st.text_input("URL de Imagen Deseo #2 (Opcional)",
+                                             value=form_data['imagen_deseo2'],
+                                             placeholder="https://ejemplo.com/imagen.jpg")
+                
+                st.markdown("### 🎁 Deseo #3 (Opcional)")
                 deseo3 = st.text_input("Deseo #3 (Opcional)",
-                                       value=form_data['deseo3'])
+                                       value=form_data['deseo3'],
+                                       label_visibility="collapsed")
                 link_deseo3 = st.text_input("Link Deseo #3 (Opcional)",
                                             value=form_data['link_deseo3'])
+                imagen_deseo3 = st.text_input("URL de Imagen Deseo #3 (Opcional)",
+                                             value=form_data['imagen_deseo3'],
+                                             placeholder="https://ejemplo.com/imagen.jpg")
 
-                # Station selection with preserved state
-                username = st.selectbox(
-                    "Elige tu username",
-                    available_stations,
-                    index=available_stations.index(form_data['username'])
-                    if form_data['username'] in available_stations
+                # Character selection with preserved state
+                character_names = [char['name'] for char in available_characters]
+                selected_character_name = st.selectbox(
+                    "Elige tu personaje",
+                    character_names,
+                    index=character_names.index(form_data['username'])
+                    if form_data['username'] in character_names
                     else 0
                 )
+                
+                # Get the selected character data
+                selected_character = next((char for char in available_characters if char['name'] == selected_character_name), None)
+                username = selected_character['name'] if selected_character else selected_character_name
+                character_photo_url = selected_character['photo_url'] if selected_character else ""
 
                 # Password field
                 password = st.text_input("Contraseña", type="password", value=form_data['password'])
@@ -256,13 +298,16 @@ class RegisterPage:
                     # Update session state with current form values
                     st.session_state.form_data = {
                         'nombre': nombre,
-                        'apellido': apellido,
+                        'email': email,
                         'deseo1': deseo1,
                         'link_deseo1': link_deseo1,
+                        'imagen_deseo1': imagen_deseo1,
                         'deseo2': deseo2,
                         'link_deseo2': link_deseo2,
+                        'imagen_deseo2': imagen_deseo2,
                         'deseo3': deseo3,
                         'link_deseo3': link_deseo3,
+                        'imagen_deseo3': imagen_deseo3,
                         'username': username,
                         'password': password
                     }
@@ -270,8 +315,13 @@ class RegisterPage:
                     # Validate inputs
                     validation_result = self.validate_inputs(st.session_state.form_data)
                     if validation_result is True:
+                        # Prepare data tuple with character photo URL and images
+                        data_to_save = (nombre, email, deseo1, link_deseo1, imagen_deseo1,
+                                       deseo2, link_deseo2, imagen_deseo2,
+                                       deseo3, link_deseo3, imagen_deseo3,
+                                       username, character_photo_url, password)
                         # Attempt to save to database
-                        if self.save_to_db(tuple(st.session_state.form_data.values())):
+                        if self.save_to_db(data_to_save):
                             # Cambiar a la página de login
                             st.session_state.form_data = {}  # Clear form data
                             st.session_state.page = "login"

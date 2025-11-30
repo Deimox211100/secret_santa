@@ -4,10 +4,13 @@ from pages.register import RegisterPage
 from pages.home import HomePage
 from pages.profile import ProfilePage
 from pages.secret_friend import FriendPage
+from pages.admin import AdminPage
+from utils.config_loader import get_current_topic
 
 # Configuración de la página
+topic = get_current_topic()
 st.set_page_config(
-    page_title="Amigo Secreto",
+    page_title=f"Amigo Secreto - {topic}",
     page_icon="🎄",
     initial_sidebar_state="collapsed"
 )
@@ -33,7 +36,7 @@ def start_page():
         st.write(' ')
     with col2:
         st.image(
-            "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmxkOWN5cHl4dTVob3p4YW52a2h4Z28yNXZ4OXZ1cnY3MW41cDF0aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/H5Ooe4b04mkawWC8KN/giphy.gif",
+            "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdng3djVyeXpseWk3NWFwcnNreGY0emVpdTNqeG1kYnloa3o4amY1eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/11EjiLDatd0syA/giphy.gif",
             use_container_width =True
         )
     with col3:
@@ -67,8 +70,8 @@ def start_page():
 
         if st.button("Iniciar Sesión ➡️", use_container_width =True):
             set_page("login")
-        # if st.button("Registrarse 📝", use_container_width =True):
-        #     set_page("register")
+        if st.button("Registrarse 📝", use_container_width =True):
+            set_page("register")
 
 
 # Función principal de la aplicación
@@ -83,9 +86,9 @@ def main():
     elif st.session_state.page == "login":
         login_page = LoginPage()
         login_page.run()
-    # elif st.session_state.page == "register":
-    #     register_page = RegisterPage()
-    #     register_page.run()
+    elif st.session_state.page == "register":
+        register_page = RegisterPage()
+        register_page.run()
     elif st.session_state.page == "home":
         home_page = HomePage()
         home_page.run()
@@ -95,6 +98,9 @@ def main():
     elif st.session_state.page == "secret_friend":
         friend_page = FriendPage()
         friend_page.run()
+    elif st.session_state.page == "admin":
+        admin_page = AdminPage()
+        admin_page.run()
 
 
 # Ejecutar la aplicación
