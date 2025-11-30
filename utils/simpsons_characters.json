@@ -1,6 +1,6 @@
 [
     {
-        "name": "Homer Simpson",
+        "name": "Homero Simpson",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/b/bd/Homer_Simpson.png"
     },
     {
@@ -24,23 +24,23 @@
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/c/cf/Ned_Flanders.png"
     },
     {
-        "name": "Moe Szyslak",
+        "name": "Moe",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/8/88/Moe_Szyslak.png"
     },
     {
-        "name": "Barney Gumble",
+        "name": "Barney",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/d/de/Barney_Gumble.png"
     },
     {
-        "name": "Apu Nahasapeemapetilon",
+        "name": "Apu",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/3/3c/Apu_Nahasapeemapetilon.png"
     },
     {
-        "name": "Chief Wiggum",
+        "name": "Jefe Gorgory",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/e/ec/Chief_Wiggum.png"
     },
     {
-        "name": "Mr. Burns",
+        "name": "Señor Burns",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/5/56/Mr_Burns.png"
     },
     {
@@ -48,11 +48,11 @@
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/6/6e/Waylon_Smithers.png"
     },
     {
-        "name": "Krusty the Clown",
+        "name": "Krusty el Payaso",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/6/68/Krusty_the_Clown.png"
     },
     {
-        "name": "Sideshow Bob",
+        "name": "Bob Patiño",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/5/5a/Sideshow_Bob.png"
     },
     {
@@ -64,15 +64,15 @@
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/a/ac/Nelson_Muntz.png"
     },
     {
-        "name": "Ralph Wiggum",
+        "name": "Rafa Gorgory",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/1/14/Ralph_Wiggum.png"
     },
     {
-        "name": "Groundskeeper Willie",
+        "name": "Willie el conserje",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/8/8f/Groundskeeper_Willie.png"
     },
     {
-        "name": "Principal Skinner",
+        "name": "Director Skinner",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/f/fe/Seymour_Skinner.png"
     },
     {
@@ -80,19 +80,15 @@
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/8/8b/Edna_Krabappel.png"
     },
     {
-        "name": "Otto Mann",
+        "name": "Otto",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/7/7d/Otto_Mann.png"
     },
     {
-        "name": "Comic Book Guy",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/e/e9/Comic_Book_Guy.png"
-    },
-    {
-        "name": "Professor Frink",
+        "name": "Profesor Frink",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/5/5a/Professor_Frink.png"
     },
     {
-        "name": "Dr. Hibbert",
+        "name": "Doctor Hibbert",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/9/9e/Dr._Hibbert.png"
     },
     {
@@ -108,7 +104,7 @@
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/9/9c/Kent_Brockman.png"
     },
     {
-        "name": "Mayor Quimby",
+        "name": "Alcalde Diamante",
         "photo_url": "https://static.wikia.nocookie.net/simpsons/images/c/c8/Mayor_Quimby.png"
     },
     {
