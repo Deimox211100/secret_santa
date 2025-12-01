@@ -59,6 +59,10 @@ class HomePage:
                 if st.button("Registrarse 📝", use_container_width=True):
                     st.session_state.page = "register"
                     st.rerun()
+
+                if st.button("Olvidé mi personaje 🔍", use_container_width=True):
+                    st.session_state.page = "recover"
+                    st.rerun()
             else:
                 # Si el usuario está logueado, mostrar opciones adicionales
                 st.markdown(
