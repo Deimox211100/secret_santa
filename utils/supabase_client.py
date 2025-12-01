@@ -3,7 +3,7 @@ Supabase database connection utility
 Provides a singleton Supabase client for the application
 """
 import os
-from supabase import create_client, Client
+from supabase import create_client, Client, ClientOptions
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -29,6 +29,9 @@ def get_supabase_client() -> Client:
             raise ValueError(
                 "SUPABASE_URL and SUPABASE_KEY must be set in environment variables"
             )
-        _supabase_client = create_client(SUPABASE_URL, SUPABASE_KEY)
+        
+        # Configure client to use 'secret-santa' schema
+        options = ClientOptions(schema="secret-santa")
+        _supabase_client = create_client(SUPABASE_URL, SUPABASE_KEY, options=options)
     
     return _supabase_client

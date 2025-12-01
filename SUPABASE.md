@@ -40,7 +40,29 @@ postgresql://postgres:[YOUR-PASSWORD]@db.your-project.supabase.co:5432/postgres
 - User: `postgres`
 - Password: `[tu contraseña]`
 
-### 4. Actualizar Variables de Entorno
+### 4. Configurar Variables de Entorno
+
+Crea un archivo `.env` basado en `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Edita `.env` y agrega tus credenciales de Supabase.
+
+### 5. ⚠️ IMPORTANTE: Exponer el Schema en la API
+
+Por defecto, Supabase solo expone el schema `public`. Como usamos el schema `secret-santa`, debes configurarlo manualmente:
+
+1. Ve a **Settings** (engranaje) > **API** en tu dashboard de Supabase.
+2. En la sección **API Settings** (PostgREST Config).
+3. Busca el campo **Exposed schemas**.
+4. Agrega `secret-santa` a la lista (ej. `public, secret-santa`).
+5. Guarda los cambios.
+
+> Si no haces esto, recibirás el error: `The schema must be one of the following: public, graphql_public`.
+
+### 6. Actualizar Variables de Entorno
 
 Edita tu archivo `.env`:
 
