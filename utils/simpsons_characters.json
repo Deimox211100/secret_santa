@@ -1,118 +1,94 @@
 [
     {
         "name": "Homero Simpson",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/b/bd/Homer_Simpson.png"
+        "photo_url": "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnp2M2VmdXFuOTZobG1iOW53NjJqNno5anc1dXZjbTQzMmkydnZ2eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/I7p8K5EY9w9dC/giphy.gif"
     },
     {
         "name": "Marge Simpson",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/0/0b/Marge_Simpson.png"
+        "photo_url": "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTFwcWd4M255NjB6NHBydGo2dm8xdmtjYndvOGM4dHZ6NGF1ZWN0aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/erg72ZtkHfayA/giphy.gif"
     },
     {
         "name": "Bart Simpson",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/a/aa/Bart_Simpson.png"
+        "photo_url": "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHk0eHkyYnU5NjN2ZGN2dnJyM25mdG1jdDI0Z3FlaW1iYzc0eHI1ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MF1S3yYk8cMJKbBBwT/giphy.gif"
     },
     {
         "name": "Lisa Simpson",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/e/ec/Lisa_Simpson.png"
+        "photo_url": "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbTd5MnNuMjM0djM1MHF3ejA1Y2kybXNiN3RvMW1lcGc5ZmJtMWtuOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/K3Sbp8fOgKye4/giphy.gif"
     },
     {
         "name": "Maggie Simpson",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/9/9d/Maggie_Simpson.png"
+        "photo_url": "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGsyaTViYjhubnY3Z3VqYzJxMjNzNmRmN3FhenF4YjgzaGtqbDZtcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/mvVlmwwKjgUxO/giphy.gif"
     },
     {
         "name": "Ned Flanders",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/c/cf/Ned_Flanders.png"
+        "photo_url": "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExejllYm4zeDh5cm90bmt2dDMwMmNybmx2dmlsaTRkczF5YzhyOWdsMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aacOScXMXvjpK/giphy.gif"
     },
     {
         "name": "Moe",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/8/88/Moe_Szyslak.png"
+        "photo_url": "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXdyODFnbGppYWw5bzlodGgwZzN3dnYwdzNvZXNnejNibWl3MzkwNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UMRb3OBnZelAQ/giphy.gif"
     },
     {
         "name": "Barney",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/d/de/Barney_Gumble.png"
+        "photo_url": "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2ZhMW0yMHJtajd0MTAyYW9qbTZ1bXp1YTMzbm80MjNsc2Jqa2NjZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/lyBCBlxAI0bo4/giphy.gif"
     },
     {
         "name": "Apu",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/3/3c/Apu_Nahasapeemapetilon.png"
+        "photo_url": "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnZ2dG1yaTFpeGtvc29taTgzZTRkams3MThia2xreGVidzV6NnowMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/x0QVbkGbECci4/giphy.gif"
     },
     {
         "name": "Jefe Gorgory",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/e/ec/Chief_Wiggum.png"
+        "photo_url": "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGQyMWFtZ3ZkOXV2YXd2Y3F4eGVpMWczanhhY3RuYXB5NHR6d2l2eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3orifad8pVwEFoDMFG/giphy.gif"
     },
     {
         "name": "Señor Burns",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/5/56/Mr_Burns.png"
+        "photo_url": "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHppZTZycGtoMDZueXg2b2k2Yzdzcm8wOG1tcm5wMXlxeG9sMmhibiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Zxp6dJwqiTyo0/giphy.gif"
     },
     {
         "name": "Waylon Smithers",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/6/6e/Waylon_Smithers.png"
+        "photo_url": "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3MmNjcnY4a3A1cHRvMXFnZGswbm1paDluY2s4em85N3FhdXFmdGd6eCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xT5LMxNorxJOsKRSuI/giphy.gif"
     },
     {
         "name": "Krusty el Payaso",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/6/68/Krusty_the_Clown.png"
+        "photo_url": "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3lkdHMyMXN6ejQ5NGl4YzRtbnRtOTlmdHBha3ZmeWQxamMxM295YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/m0HmWpbFvXaUg/giphy.gif"
     },
     {
         "name": "Bob Patiño",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/5/5a/Sideshow_Bob.png"
+        "photo_url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWw3aXA4ZTR5ZGlyNGFuYmNleXAxdWY3NzZ5YTJhZHV3NmEyZHFodiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/RSOUOj8H9A3Xq/giphy.gif"
     },
     {
         "name": "Milhouse Van Houten",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/1/11/Milhouse_Van_Houten.png"
+        "photo_url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG80YnVkbDN1ZWFwamZjMXE5MGNtaTdjdGc0ZDhuZm9meWp0anptYyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l2JIdU9G4NwGBua0U/giphy.gif"
     },
     {
         "name": "Nelson Muntz",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/a/ac/Nelson_Muntz.png"
+        "photo_url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmFsZnllbGxsOHM3czRsbjJsZnM5dTQzaDUxbGM5ajByNWl6MGk2cyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3orieLHXgpfkKO9Iju/giphy.gif"
     },
     {
         "name": "Rafa Gorgory",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/1/14/Ralph_Wiggum.png"
+        "photo_url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXdhMHdpOGdhMGZxb2J3Y2xzYTV6dDdsMzl6OHYyZmJhNXFlaHo1biZlcD12MV9naWZzX3NlYXJjaCZjdD1n/wzJ67MJMk6UMM/giphy.gif"
     },
     {
         "name": "Willie el conserje",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/8/8f/Groundskeeper_Willie.png"
+        "photo_url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnNxMzk0NzQ2ZDhvbjExdG5iZTdlODluNG1vcWFmcHdydW8zN3hxbSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ehhl9lGrxzFYY/giphy.gif"
     },
     {
         "name": "Director Skinner",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/f/fe/Seymour_Skinner.png"
+        "photo_url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZm5uczl6MzBxamNweXJ1aGsxMzhlaHloNmhoNWNtdHJqN3NwcDIwdCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3o752kakMLKVv5Jzpu/giphy.gif"
     },
     {
         "name": "Edna Krabappel",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/8/8b/Edna_Krabappel.png"
+        "photo_url": "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bm9rZ3psbmMzbmcyeHJ4eWw4a2Q5NzFseWFtdTI2dnhoaWNwOWE0dSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xT5LMJTaxah7M9tDiw/giphy.gif"
     },
     {
         "name": "Otto",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/7/7d/Otto_Mann.png"
+        "photo_url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzU1NmNoamZvMzB1b2t2ejgzeDM5eHN4NnBlaDk1MWIxZWlpOWNiaSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xTnj7s9kx230Q/giphy.gif"
     },
     {
         "name": "Profesor Frink",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/5/5a/Professor_Frink.png"
+        "photo_url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2h0ZDBkaXJsZGY5b3Y2ZWU1cXljcGtoeHpxb3h2YTVkMDhpbHdzcSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3o6MbioS2TqBJUBbMY/giphy.gif"
     },
     {
         "name": "Doctor Hibbert",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/9/9e/Dr._Hibbert.png"
-    },
-    {
-        "name": "Lenny Leonard",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/8/84/Lenny_Leonard.png"
-    },
-    {
-        "name": "Carl Carlson",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/a/a7/Carl_Carlson.png"
-    },
-    {
-        "name": "Kent Brockman",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/9/9c/Kent_Brockman.png"
-    },
-    {
-        "name": "Alcalde Diamante",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/c/c8/Mayor_Quimby.png"
-    },
-    {
-        "name": "Patty Bouvier",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/b/ba/Patty_Bouvier.png"
-    },
-    {
-        "name": "Selma Bouvier",
-        "photo_url": "https://static.wikia.nocookie.net/simpsons/images/d/d6/Selma_Bouvier.png"
+        "photo_url": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNG1mYW5va2Q0djBvaW00bWhiZGQ1Nm9odmQ0dDluZGU5MzVxOW1qdCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xT5LMXYq3irAdlCcwg/giphy.gif"
     }
 ]

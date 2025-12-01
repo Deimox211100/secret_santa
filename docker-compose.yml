@@ -14,6 +14,8 @@ services:
       SUPABASE_KEY: ${SUPABASE_KEY}
     ports:
       - "${APP_PORT:-8501}:8501"
+    volumes:
+      - ./:/app
     networks:
       - secret-santa-network
 

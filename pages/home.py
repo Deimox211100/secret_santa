@@ -40,23 +40,17 @@ class HomePage:
         # Título principal
         st.markdown("<h1 class='title'>🎄 Juguemos al Amigo Secreto 🎄</h1>", unsafe_allow_html=True)
 
-        # Columnas para centrar la imagen
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.write(' ')
-        with col2:
-            st.image(
-                "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzBoZWhsNjBhMnBleTIxdnJoczd5ZW05d2JiYjZmeTFqbHUxNm5pMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HBMCmtsPEUShG/giphy.gif",
-                use_container_width=True
-            )
-        with col3:
-            st.write(' ')
-
         # Columnas para centrar los botones
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
             # Verificar si el usuario está autenticado
             if 'logged_in' not in st.session_state or not st.session_state.logged_in:
+                # Mostrar imagen principal solo si NO está logueado
+                st.image(
+                    "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzBoZWhsNjBhMnBleTIxdnJoczd5ZW05d2JiYjZmeTFqbHUxNm5pMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HBMCmtsPEUShG/giphy.gif",
+                    use_container_width=True
+                )
+                
                 # Botones de Login y Register
                 if st.button("Iniciar Sesión ➡️", use_container_width=True):
                     st.session_state.page = "login"
@@ -70,6 +64,12 @@ class HomePage:
                 st.markdown(
                     f"<h2 style='text-align: center; color: white;'>¡Bienvenid@ {st.session_state.username}!</h2>",
                     unsafe_allow_html=True)
+                
+                # Mostrar imagen del personaje si existe (centrada)
+                if 'character_photo_url' in st.session_state and st.session_state.character_photo_url:
+                    sub_col1, sub_col2, sub_col3 = st.columns([1, 2, 1])
+                    with sub_col2:
+                        st.image(st.session_state.character_photo_url, use_container_width=True, caption=st.session_state.username)
 
                 if st.button("Ver Mi Perfil", use_container_width=True):
                     # Aquí podrías agregar la navegación a la página de perfil

@@ -49,13 +49,14 @@ class ProfilePage:
         """Fetch user information from the database."""
         try:
             response = self.supabase.table('users').select(
-                'character_name, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, wishes_locked'
+                'character_name, character_photo_url, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, wishes_locked'
             ).eq('character_name', username).execute()
             
             if response.data and len(response.data) > 0:
                 user = response.data[0]
                 return (
                     user['character_name'],
+                    user.get('character_photo_url'),
                     user['deseo1'],
                     user['link_deseo1'],
                     user['deseo2'],
@@ -97,7 +98,13 @@ class ProfilePage:
         user_info = self.get_user_info(username)
 
         if user_info:
-            character_name, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, wishes_locked = user_info
+            character_name, character_photo_url, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, wishes_locked = user_info
+
+            # Display character photo
+            if character_photo_url:
+                col1, col2, col3 = st.columns([1, 2, 1])
+                with col2:
+                    st.image(character_photo_url, width=200, caption=character_name)
 
             # Check if wishes are locked
             if wishes_locked:

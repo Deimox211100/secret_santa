@@ -58,7 +58,12 @@ class LoginPage:
             user_response = self.supabase.table('users').select('*').eq('character_name', username).eq('password', password).execute()
             
             if user_response.data and len(user_response.data) > 0:
-                return {'is_admin': False, 'username': username}
+                user = user_response.data[0]
+                return {
+                    'is_admin': False, 
+                    'username': username,
+                    'character_photo_url': user.get('character_photo_url')
+                }
             
             return None
         except Exception as e:
@@ -100,6 +105,7 @@ class LoginPage:
                         st.session_state.logged_in = True
                         st.session_state.username = result['username']
                         st.session_state.is_admin = result['is_admin']
+                        st.session_state.character_photo_url = result.get('character_photo_url')
 
                         # Cambiar a la página correspondiente
                         if result['is_admin']:
