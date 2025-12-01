@@ -194,7 +194,7 @@ class RegisterPage:
             st.write(' ')
         with col2:
             st.image(
-                "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdng3djVyeXpseWk3NWFwcnNreGY0emVpdTNqeG1kYnloa3o4amY1eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/11EjiLDatd0syA/giphy.gif",
+                "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExempsdW9ybnFmZG9weWtidDY5NGUwc2VkYW5oYjJhMDc0eHh1dnZ5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WmkqburJqXziM/giphy.gif",
                 use_container_width=True
             )
         with col3:

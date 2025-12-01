@@ -77,7 +77,7 @@ class LoginPage:
             st.write(' ')
         with col2:
             st.image(
-                "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnF4ZGRwdGRxdWNwbHp0ZjBjZHhzNGN4dGJoNnlwNGtxOWF3MHpyNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xUPGcCh4nUHyCkyuti/giphy.gif",
+                "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjRvdDRjejl5bXloZTR4MW05NG1hNnphOGlzemd2YnBndXJob2hiMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9JrvLb0fnrn7k1ZjhX/giphy.gif",
                 use_container_width=True
             )
         with col3:
