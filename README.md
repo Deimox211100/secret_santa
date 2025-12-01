@@ -11,58 +11,77 @@ A Secret Santa web application with a parametric topic system. For 2025, the the
 - 🎲 **Random Assignment** - Automated secret friend matching
 - 🐳 **Docker Support** - Easy deployment with Docker Compose
 
-## Quick Start with Docker
+## Quick Start with Docker + Supabase
 
 ### Prerequisites
 - Docker Desktop
-- Docker Compose
+- Supabase account ([supabase.com](https://supabase.com))
 
-### 1. Clone and Setup
+### 1. Setup Supabase Database
+
+1. Create a project in Supabase
+2. Run the SQL script in Supabase SQL Editor:
+   - Copy content from `utils/supabase_setup.sql`
+   - Paste and execute in SQL Editor
+3. Get your database credentials from Project Settings > Database
+
+### 2. Configure Environment
+
 ```bash
 cd secret_santa
 cp .env.example .env
 ```
 
-### 2. Start the Application
+Edit `.env` with your Supabase credentials:
+```bash
+DB_HOST=db.your-project.supabase.co
+DB_USER=postgres
+DB_PASSWORD=your-supabase-password
+DB_NAME=postgres
+DB_PORT=5432
+ADMIN_PWD=your_admin_password
+```
+
+### 3. Start the Application
 ```bash
 docker-compose up -d
 ```
 
-### 3. Access
+### 4. Access
 Open your browser: **http://localhost:8501**
 
-### 4. Stop
+### 5. Stop
 ```bash
 docker-compose down
 ```
 
-For detailed Docker instructions, see [DOCKER.md](DOCKER.md)
+For detailed Supabase setup, see [SUPABASE.md](SUPABASE.md)
 
 ## Manual Setup (Without Docker)
 
 ### Prerequisites
 - Python 3.9+
-- PostgreSQL 15+
+- Supabase account
 
 ### 1. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Configure Database
+### 2. Setup Supabase
+1. Create project in Supabase
+2. Run `utils/supabase_setup.sql` in SQL Editor
+3. Get database credentials
+
+### 3. Configure Environment
 Create a `.env` file:
 ```bash
-DB_HOST=localhost
+DB_HOST=db.your-project.supabase.co
 DB_USER=postgres
-DB_PASSWORD=your_password
-DB_NAME=secret_santa
+DB_PASSWORD=your-supabase-password
+DB_NAME=postgres
 DB_PORT=5432
-```
-
-### 3. Initialize Database
-```bash
-psql -h localhost -U postgres -d secret_santa -f utils/init_db.sql
-psql -h localhost -U postgres -d secret_santa -f utils/setup.sql
+ADMIN_PWD=your_admin_password
 ```
 
 ### 4. Run Application

@@ -1,24 +1,20 @@
 import streamlit as st
-import psycopg2
-from psycopg2 import Error
 import os
 from dotenv import load_dotenv
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from utils.supabase_client import get_supabase_client
 
 # Load environment variables
 load_dotenv()
 
+
 class ProfilePage:
     def __init__(self):
-        # Database connection configuration
-        self.db_config = {
-            'host': os.getenv('DB_HOST'),
-            'user': os.getenv('DB_USER'),
-            'password': os.getenv('DB_PASSWORD'),
-            'dbname': os.getenv('DB_NAME'),
-            'port': os.getenv('DB_PORT', '5432')
-        }
+        # Get Supabase client
+        self.supabase = get_supabase_client()
 
-        # CSS para estilos personalizados
+        # Estilos CSS personalizados
         st.markdown("""
         <style>
         .stApp {
@@ -33,9 +29,15 @@ class ProfilePage:
             color: white;
             background-color: #4CAF50;
             border: none;
-            padding: 10px 20px;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
             font-size: 16px;
+            margin: 10px 2px;
+            transition-duration: 0.4s;
             cursor: pointer;
+            width: 100%;
         }
         .stButton > button:hover {
             background-color: #45a049;
@@ -43,55 +45,53 @@ class ProfilePage:
         </style>
         """, unsafe_allow_html=True)
 
-    def connect_to_db(self):
-        """Establish a database connection."""
-        try:
-            connection = psycopg2.connect(**self.db_config)
-            return connection
-        except (Exception, Error) as e:
-            st.error(f"Error connecting to the PostgreSQL database: {e}")
-            return None
-
     def get_user_info(self, username):
         """Fetch user information from the database."""
-        connection = self.connect_to_db()
-        if connection:
-            try:
-                with connection.cursor() as cursor:
-                    cursor.execute("""
-                    SELECT character_name, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, wishes_locked 
-                    FROM "secret-santa".users WHERE character_name = %s
-                    """, (username,))
-                    return cursor.fetchone()
-            except (Exception, Error) as e:
-                st.error(f"Error fetching user info: {e}")
-                return None
-            finally:
-                connection.close()
-        return None
+        try:
+            response = self.supabase.table('users').select(
+                'character_name, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, wishes_locked'
+            ).eq('character_name', username).execute()
+            
+            if response.data and len(response.data) > 0:
+                user = response.data[0]
+                return (
+                    user['character_name'],
+                    user['deseo1'],
+                    user['link_deseo1'],
+                    user['deseo2'],
+                    user['link_deseo2'],
+                    user['deseo3'],
+                    user['link_deseo3'],
+                    user['wishes_locked']
+                )
+            return None
+        except Exception as e:
+            st.error(f"Error fetching user info: {e}")
+            return None
 
     def update_user_info(self, username, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3):
         """Update user information in the database."""
-        connection = self.connect_to_db()
-        if connection:
-            try:
-                with connection.cursor() as cursor:
-                    cursor.execute("""
-                    UPDATE "secret-santa".users
-                    SET deseo1 = %s, link_deseo1 = %s, deseo2 = %s, link_deseo2 = %s, deseo3 = %s, link_deseo3 = %s
-                    WHERE character_name = %s
-                    """, (deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, username))
-                    connection.commit()
-                    st.success("Información actualizada exitosamente.")
-            except (Exception, Error) as e:
-                st.error(f"Error updating user info: {e}")
-            finally:
-                connection.close()
+        try:
+            response = self.supabase.table('users').update({
+                'deseo1': deseo1,
+                'link_deseo1': link_deseo1,
+                'deseo2': deseo2,
+                'link_deseo2': link_deseo2,
+                'deseo3': deseo3,
+                'link_deseo3': link_deseo3
+            }).eq('character_name', username).execute()
+            
+            if response.data:
+                st.success("Información actualizada exitosamente.")
+                return True
+            return False
+        except Exception as e:
+            st.error(f"Error updating user info: {e}")
+            return False
 
     def render_form(self):
-        """Render the profile form with editable fields."""
-        st.markdown(f"<h1 style='text-align: center; color: white;'>🎅🏻 Perfil - {st.session_state.username} 🎅🏻</h1>",
-                    unsafe_allow_html=True)
+        """Render the profile form."""
+        st.markdown("<h1 style='text-align: center; color: white;'>🎁 Mi Perfil</h1>", unsafe_allow_html=True)
 
         username = st.session_state.username
         user_info = self.get_user_info(username)
@@ -123,7 +123,8 @@ class ProfilePage:
             if st.button("Volver", use_container_width=True):
                 st.session_state.page = "home"
                 st.rerun()
-
+        else:
+            st.error("No se pudo cargar la información del usuario.")
 
     def run(self):
         """Run the Streamlit application."""

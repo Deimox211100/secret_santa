@@ -1,10 +1,10 @@
 import streamlit as st
+import json
+import psycopg2
+from psycopg2 import Error
 import re
 import os
 from dotenv import load_dotenv
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.supabase_client import get_supabase_client
 
 # Load environment variables
 load_dotenv()
@@ -12,8 +12,14 @@ load_dotenv()
 
 class RegisterPage:
     def __init__(self):
-        # Get Supabase client
-        self.supabase = get_supabase_client()
+        # Database connection configuration from environment variables
+        self.db_config = {
+            'host': os.getenv('DB_HOST'),
+            'user': os.getenv('DB_USER'),
+            'password': os.getenv('DB_PASSWORD'),
+            'dbname': os.getenv('DB_NAME'),
+            'port': os.getenv('DB_PORT', '5432')
+        }
 
         # Estilos CSS personalizados
         st.markdown("""
@@ -68,6 +74,15 @@ class RegisterPage:
                 'password': ''
             }
 
+    def connect_to_db(self):
+        """Establish a database connection."""
+        try:
+            connection = psycopg2.connect(**self.db_config)
+            return connection
+        except (Exception, Error) as e:
+            st.error(f"Error connecting to the PostgreSQL database: {e}")
+            return None
+
     def load_characters(self):
         """Load available characters from the configured characters file."""
         try:
@@ -83,14 +98,20 @@ class RegisterPage:
 
     def get_selected_characters(self):
         """Retrieve already selected characters from the database."""
-        try:
-            response = self.supabase.table('users').select('character_name').execute()
-            if response.data:
-                return [user['character_name'] for user in response.data]
-            return []
-        except Exception as e:
-            st.error(f"Error retrieving selected characters: {e}")
-            return []
+        connection = self.connect_to_db()
+        if connection:
+            try:
+                with connection.cursor() as cursor:
+                    cursor.execute('SELECT character_name FROM "secret-santa".users')
+                    selected_characters = [row[0] for row in cursor.fetchall()]
+                return selected_characters
+            except (Exception, Error) as e:
+                st.error(f"Error retrieving selected characters: {e}")
+                return []
+            finally:
+                if connection:
+                    connection.close()
+        return []
 
     def is_valid_email(self, email):
         """Validate email format."""
@@ -153,49 +174,40 @@ class RegisterPage:
 
     def save_to_db(self, data):
         """Save user data to the database."""
-        try:
-            # Prepare data dictionary for Supabase
-            user_data = {
-                'nombre': data[0],
-                'email': data[1],
-                'deseo1': data[2],
-                'link_deseo1': data[3],
-                'imagen_deseo1': data[4],
-                'deseo2': data[5],
-                'link_deseo2': data[6],
-                'imagen_deseo2': data[7],
-                'deseo3': data[8],
-                'link_deseo3': data[9],
-                'imagen_deseo3': data[10],
-                'character_name': data[11],
-                'character_photo_url': data[12],
-                'password': data[13]
-            }
-            
-            response = self.supabase.table('users').insert(user_data).execute()
-            
-            if response.data:
-                st.success("Registro guardado exitosamente.")
-                return True
-            return False
-        except Exception as e:
-            st.error(f"Error al guardar el registro: {e}")
-            return False
+        connection = self.connect_to_db()
+        if connection:
+            try:
+                with connection.cursor() as cursor:
+                    insert_query = """
+                    INSERT INTO "secret-santa".users 
+                    (nombre, email, deseo1, link_deseo1, imagen_deseo1, deseo2, link_deseo2, imagen_deseo2,
+                     deseo3, link_deseo3, imagen_deseo3, character_name, character_photo_url, password)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(insert_query, data)
+                    connection.commit()
+                    st.success("Registro guardado exitosamente.")
+                    return True
+            except (Exception, Error) as e:
+                st.error(f"Error al guardar el registro: {e}")
+                return False
+            finally:
+                if connection:
+                    connection.close()
+        return False
 
     def render_form(self):
         """Render the main registration form."""
-        # Título centrado y estilizado
-        st.markdown("<h1 style='text-align: center; color: white; font-size: 2.5em;'>🎄 Registro 🎄</h1>",
+        st.markdown("<h1 style='text-align: center; color: white;'>🎅🏻 Registrate para participar 🎅🏻</h1>",
                     unsafe_allow_html=True)
 
-        # Columnas para centrar la imagen
         col1, col2, col3 = st.columns(3)
         with col1:
             st.write(' ')
         with col2:
             st.image(
-                "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdng3djVyeXpseWk3NWFwcnNreGY0emVpdTNqeG1kYnloa3o4amY1eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/11EjiLDatd0syA/giphy.gif",
-                use_container_width=True
+                "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2Vnb2dmcDBkMnNpNHN5cG9vYm55NDY2MG8wdzRwNjlsbDU3ZWk4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VKwspRV2pafJu/giphy.gif",
+                use_container_width =True
             )
         with col3:
             st.write(' ')
@@ -206,8 +218,9 @@ class RegisterPage:
             # Load characters
             all_characters = self.load_characters()
             selected_characters = self.get_selected_characters()
+            selected_character_names = [char['name'] for char in selected_characters] if selected_characters and isinstance(selected_characters[0], dict) else selected_characters
             available_characters = [char for char in all_characters
-                                   if char['name'] not in selected_characters]
+                                   if char['name'] not in selected_character_names]
 
             # Prepare form data from session state
             form_data = st.session_state.form_data
@@ -315,7 +328,7 @@ class RegisterPage:
                             st.rerun()
 
     def run(self):
-        """Run the registration page."""
+        """Run the Streamlit application."""
         self.render_form()
 
 

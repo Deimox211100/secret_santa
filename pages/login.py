@@ -1,8 +1,9 @@
 import streamlit as st
 import os
-import psycopg2
-from psycopg2 import Error
 from dotenv import load_dotenv
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from utils.supabase_client import get_supabase_client
 
 # Cargar variables de entorno
 load_dotenv()
@@ -10,14 +11,8 @@ load_dotenv()
 
 class LoginPage:
     def __init__(self):
-        # Configuración de la base de datos desde las variables de entorno
-        self.db_config = {
-            'host': os.getenv('DB_HOST'),
-            'user': os.getenv('DB_USER'),
-            'password': os.getenv('DB_PASSWORD'),
-            'dbname': os.getenv('DB_NAME'),
-            'port': os.getenv('DB_PORT', '5432')
-        }
+        # Get Supabase client
+        self.supabase = get_supabase_client()
 
         # Estilos CSS personalizados
         st.markdown("""
@@ -50,49 +45,30 @@ class LoginPage:
         </style>
         """, unsafe_allow_html=True)
 
-    def connect_to_db(self):
-        """Conectar a la base de datos PostgreSQL."""
-        try:
-            connection = psycopg2.connect(**self.db_config)
-            return connection
-        except (Exception, Error) as e:
-            st.error(f"Error al conectar con la base de datos PostgreSQL: {e}")
-            return None
-
     def check_credentials(self, username, password):
         """Verificar las credenciales del usuario en la base de datos."""
-        connection = self.connect_to_db()
-        if connection:
-            try:
-                with connection.cursor() as cursor:
-                    # Check if admin
-                    cursor.execute("""
-                    SELECT * FROM "secret-santa".admin WHERE username = %s AND password = %s
-                    """, (username, password))
-                    admin = cursor.fetchone()
-                    if admin:
-                        return {'is_admin': True, 'username': username}
-                    
-                    # Check if regular user
-                    cursor.execute("""
-                    SELECT * FROM "secret-santa".users WHERE character_name = %s AND password = %s
-                    """, (username, password))
-                    user = cursor.fetchone()
-                    if user:
-                        return {'is_admin': False, 'username': username}
-                    
-                    return None
-            except (Exception, Error) as e:
-                st.error(f"Error al verificar las credenciales: {e}")
-                return None
-            finally:
-                if connection:
-                    connection.close()
-        return None
+        try:
+            # Check if admin
+            admin_response = self.supabase.table('admin').select('*').eq('username', username).eq('password', password).execute()
+            
+            if admin_response.data and len(admin_response.data) > 0:
+                return {'is_admin': True, 'username': username}
+            
+            # Check if regular user
+            user_response = self.supabase.table('users').select('*').eq('character_name', username).eq('password', password).execute()
+            
+            if user_response.data and len(user_response.data) > 0:
+                return {'is_admin': False, 'username': username}
+            
+            return None
+        except Exception as e:
+            st.error(f"Error al verificar las credenciales: {e}")
+            return None
 
     def render_login_page(self):
         """Renderizar la página de login."""
-        st.markdown("<h1 style='text-align: center; color: white;'>🎅🏻 Iniciar Sesión - Amigo Secreto</h1>",
+        # Título centrado y estilizado
+        st.markdown("<h1 style='text-align: center; color: white; font-size: 2.5em;'>🎄 Iniciar Sesión 🎄</h1>",
                     unsafe_allow_html=True)
 
         # Columnas para centrar la imagen
@@ -101,19 +77,20 @@ class LoginPage:
             st.write(' ')
         with col2:
             st.image(
-                "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3lkZmJkZGtuMmkwam1jbDh2aWpsaGl2NHBybjA5MHQ3MG96M214dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9JrvLb0fnrn7k1ZjhX/giphy.gif",
-                use_container_width =True
+                "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnF4ZGRwdGRxdWNwbHp0ZjBjZHhzNGN4dGJoNnlwNGtxOWF3MHpyNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xUPGcCh4nUHyCkyuti/giphy.gif",
+                use_container_width=True
             )
         with col3:
             st.write(' ')
 
-        # Columnas para centrar el formulario
+        # Contenedor para centrar los formularios y botones
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            # Campos de formulario de login
-            username = st.text_input("Personaje")
+            # Campos de entrada
+            username = st.text_input("Personaje", max_chars=100)
             password = st.text_input("Contraseña", type="password")
 
+            # Botón de login
             if st.button("Iniciar Sesión", use_container_width=True):
                 if username and password:
                     # Verificar las credenciales
@@ -135,7 +112,7 @@ class LoginPage:
                 else:
                     st.error("Por favor ingresa tu personaje y contraseña.")
 
-            # Botón para volver al inicio
+            # Botón de volver
             if st.button("Volver", use_container_width=True):
                 st.session_state.page = "start"
                 st.rerun()
