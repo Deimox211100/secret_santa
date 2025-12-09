@@ -49,7 +49,7 @@ class ProfilePage:
         """Fetch user information from the database."""
         try:
             response = self.supabase.table('users').select(
-                'character_name, character_photo_url, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, wishes_locked'
+                'character_name, character_photo_url, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, comentarios_generales, wishes_locked'
             ).eq('character_name', username).execute()
             
             if response.data and len(response.data) > 0:
@@ -63,6 +63,7 @@ class ProfilePage:
                     user['link_deseo2'],
                     user['deseo3'],
                     user['link_deseo3'],
+                    user.get('comentarios_generales', ''),
                     user['wishes_locked']
                 )
             return None
@@ -70,7 +71,7 @@ class ProfilePage:
             st.error(f"Error fetching user info: {e}")
             return None
 
-    def update_user_info(self, username, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3):
+    def update_user_info(self, username, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, comentarios_generales):
         """Update user information in the database."""
         try:
             response = self.supabase.table('users').update({
@@ -79,7 +80,8 @@ class ProfilePage:
                 'deseo2': deseo2,
                 'link_deseo2': link_deseo2,
                 'deseo3': deseo3,
-                'link_deseo3': link_deseo3
+                'link_deseo3': link_deseo3,
+                'comentarios_generales': comentarios_generales
             }).eq('character_name', username).execute()
             
             if response.data:
@@ -98,7 +100,7 @@ class ProfilePage:
         user_info = self.get_user_info(username)
 
         if user_info:
-            character_name, character_photo_url, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, wishes_locked = user_info
+            character_name, character_photo_url, deseo1, link_deseo1, deseo2, link_deseo2, deseo3, link_deseo3, comentarios_generales, wishes_locked = user_info
 
             # Display character photo
             if character_photo_url:
@@ -121,11 +123,14 @@ class ProfilePage:
             deseo3_edit = st.text_input("Deseo 3", value=deseo3, disabled=wishes_locked)
             link_deseo3_edit = st.text_input("Link del Deseo 3", value=link_deseo3, disabled=wishes_locked)
 
+            st.markdown("### 📝 Comentarios Generales")
+            comentarios_generales_edit = st.text_area("Comentarios sobre tus deseos, tallas, colores preferidos, etc.", value=comentarios_generales, disabled=wishes_locked)
+
             # Save button (only if wishes not locked)
             if not wishes_locked:
                 if st.button("Guardar Cambios", use_container_width=True):
                     self.update_user_info(username, deseo1_edit, link_deseo1_edit, deseo2_edit, link_deseo2_edit,
-                                          deseo3_edit, link_deseo3_edit)
+                                          deseo3_edit, link_deseo3_edit, comentarios_generales_edit)
 
             if st.button("Volver", use_container_width=True):
                 st.session_state.page = "home"

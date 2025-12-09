@@ -64,6 +64,7 @@ class RegisterPage:
                 'deseo3': '',
                 'link_deseo3': '',
                 'imagen_deseo3': '',
+                'comentarios_generales': '',
                 'username': None,
                 'password': ''
             }
@@ -167,9 +168,10 @@ class RegisterPage:
                 'deseo3': data[8],
                 'link_deseo3': data[9],
                 'imagen_deseo3': data[10],
-                'character_name': data[11],
-                'character_photo_url': data[12],
-                'password': data[13]
+                'comentarios_generales': data[11],
+                'character_name': data[12],
+                'character_photo_url': data[13],
+                'password': data[14]
             }
             
             response = self.supabase.table('users').insert(user_data).execute()
@@ -252,6 +254,11 @@ class RegisterPage:
                                              value=form_data['imagen_deseo3'],
                                              placeholder="https://ejemplo.com/imagen.jpg")
 
+                st.markdown("### 📝 Comentarios Generales (Opcional)")
+                comentarios_generales = st.text_area("Comentarios sobre tus deseos, tallas, colores preferidos, etc.",
+                                                    value=form_data.get('comentarios_generales', ''),
+                                                    height=100)
+
                 # Character selection with preserved state
                 character_names = [char['name'] for char in available_characters]
                 selected_character_name = st.selectbox(
@@ -295,6 +302,7 @@ class RegisterPage:
                         'deseo3': deseo3,
                         'link_deseo3': link_deseo3,
                         'imagen_deseo3': imagen_deseo3,
+                        'comentarios_generales': comentarios_generales,
                         'username': username,
                         'password': password
                     }
@@ -306,6 +314,7 @@ class RegisterPage:
                         data_to_save = (nombre, email, deseo1, link_deseo1, imagen_deseo1,
                                        deseo2, link_deseo2, imagen_deseo2,
                                        deseo3, link_deseo3, imagen_deseo3,
+                                       comentarios_generales,
                                        username, character_photo_url, password)
                         # Attempt to save to database
                         if self.save_to_db(data_to_save):
