@@ -200,7 +200,7 @@ class FriendPage:
                 </div>
                 """, unsafe_allow_html=True)
                 
-                st.markdown('</div>', unsafe_allow_html=True) # Close letter container
+
 
                 # Show images below the letter for better layout
                 st.markdown("### 📸 Referencias Visuales")
@@ -219,7 +219,7 @@ class FriendPage:
                         st.image(friend_info['friend_imagen_deseo3'], caption="Deseo #3", use_container_width=True)
             
             else:
-                st.warning("Aún no se ha echo el sorteo, Calma Tigre!.")
+                st.warning("Aún no se ha hecho el sorteo, Calma Tigre!.")
 
         if st.button("Volver", use_container_width=True):
             st.session_state.page = "home"
