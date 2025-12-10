@@ -97,126 +97,53 @@ class FriendPage:
         if st.button("Consultar Amigo Secreto", use_container_width=True):
             friend_info = self.fetch_friend_info(username)
             if friend_info:
-                # Styles for the letter
-                st.markdown("""
-                <style>
-                .letter-container {
-                    background-color: #f8f9fa;
-                    color: #2c3e50;
-                    padding: 40px;
-                    border-radius: 10px;
-                    font-family: 'Courier New', Courier, monospace;
-                    line-height: 1.6;
-                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                    margin: 20px 0;
-                    border: 2px solid #e0e0e0;
-                    background-image: repeating-linear-gradient(0deg, transparent, transparent 29px, #d1d1d1 30px);
-                }
-                .letter-header {
-                    font-size: 1.5em;
-                    font-weight: bold;
-                    margin-bottom: 20px;
-                }
-                .letter-body {
-                    font-size: 1.2em;
-                }
-                .letter-wish {
-                    margin-left: 20px;
-                    margin-bottom: 15px;
-                }
-                .letter-footer {
-                    margin-top: 40px;
-                    text-align: right;
-                    font-size: 1.3em;
-                    font-style: italic;
-                }
-                .highlight-wish {
-                    color: #c0392b;
-                    font-weight: bold;
-                }
-                a {
-                    color: #d35400;
-                    text-decoration: none;
-                }
-                a:hover {
-                    text-decoration: underline;
-                }
-                </style>
-                """, unsafe_allow_html=True)
-
-                # Character photo
-                if friend_info['friend_photo_url']:
-                    col1, col2, col3 = st.columns([1, 1, 1])
-                    with col2:
-                        st.image(friend_info['friend_photo_url'], width=150, caption=friend_info['friend_character_name'])
-
-                # Letter Content construction
+                # Character photo and name
+                col_profile1, col_profile2 = st.columns([1, 2])
+                with col_profile1:
+                    if friend_info['friend_photo_url']:
+                        st.image(friend_info['friend_photo_url'], use_container_width=True, caption=friend_info['friend_character_name'])
+                    else:
+                        st.info("Sin foto de perfil")
                 
-                # Helper to format wish with link
-                def format_wish(wish, link, image_url, idx):
-                    html = f"<div class='letter-wish'>To see the magic of wish #{idx}: <br>"
-                    html += f"<span class='highlight-wish'>{wish}</span>"
-                    if link:
-                        html += f" <a href='{link}' target='_blank'>(Ver referencia 🔗)</a>"
-                    
-                    if image_url:
-                         # We use regular st.image below, so just a marker here or we could embed img tag if we trust source
-                         pass
-                    html += "</div>"
-                    return html
+                with col_profile2:
+                    st.header(f"Tu amigo secreto es: {friend_info['friend_character_name']} 🎅")
+                    st.info("¡Recuerda revisar sus deseos cuidadosamente!")
 
-                st.markdown('<div class="letter-container">', unsafe_allow_html=True)
+                st.markdown("---")
                 
-                st.markdown(f"""
-                <div class="letter-header">Querido Santa (osea tú, {username}) 🎅,</div>
-                <div class="letter-body">
-                    <p>Este año me he portado EXTRAORDINARIAMENTE bien (créeme 😉). Para esta Navidad, me haría la persona más feliz del mundo recibir alguno de estos regalitos:</p>
-                    
-                    <p><strong>Como primera opción (mi favorito 😍):</strong></p>
-                    {format_wish(friend_info['friend_deseo1'], friend_info['friend_link_deseo1'], friend_info['friend_imagen_deseo1'], 1)}
-                    
-                    <p><strong>También me encantaría:</strong></p>
-                    {format_wish(friend_info['friend_deseo2'], friend_info['friend_link_deseo2'], friend_info['friend_imagen_deseo2'], 2)}
-                """, unsafe_allow_html=True)
+                # Wishes Section
+                st.subheader("🎁 Lista de Deseos")
 
+                # Helper to display a wish
+                def display_wish(number, title, wish, link, image, color_emoji):
+                   with st.container():
+                       st.markdown(f"### {color_emoji} {title}")
+                       st.write(wish)
+                       
+                       if link:
+                           st.link_button(f"Ver Referencia del Deseo #{number} 🔗", link)
+                       
+                       if image:
+                           st.image(image, caption=f"Imagen Referencia #{number}", width=300)
+                       st.markdown("---")
+
+                # Wish 1
+                display_wish(1, "Primera Opción (Favorito 😍)", friend_info['friend_deseo1'], 
+                             friend_info['friend_link_deseo1'], friend_info['friend_imagen_deseo1'], "🥇")
+
+                # Wish 2
+                display_wish(2, "Segunda Opción (Me encanta)", friend_info['friend_deseo2'],
+                             friend_info['friend_link_deseo2'], friend_info['friend_imagen_deseo2'], "🥈")
+
+                # Wish 3
                 if friend_info['friend_deseo3'] != "SIN DESEO":
-                    st.markdown(f"""
-                    <p><strong>Y si te sientes muy generoso 😇:</strong></p>
-                    {format_wish(friend_info['friend_deseo3'], friend_info['friend_link_deseo3'], friend_info['friend_imagen_deseo3'], 3)}
-                    """, unsafe_allow_html=True)
+                     display_wish(3, "Tercera Opción (Si te sientes generoso 😇)", friend_info['friend_deseo3'],
+                             friend_info['friend_link_deseo3'], friend_info['friend_imagen_deseo3'], "🥉")
 
+                # General Comments
                 if friend_info['friend_comentarios_generales']:
-                    st.markdown(f"""
-                    <p><strong>P.D. (Notas importantes 📝):</strong><br>
-                    {friend_info['friend_comentarios_generales']}</p>
-                    """, unsafe_allow_html=True)
-
-                st.markdown(f"""
-                    <div class="letter-footer">
-                        Con cariño y esperanza,<br>
-                        {friend_info['friend_character_name']} 🎄
-                    </div>
-                </div>
-                </div>
-                """, unsafe_allow_html=True)
-                
-
-
-                # Show images below the letter for better layout
-                st.markdown("### 📸 Referencias Visuales")
-                cols = st.columns(3)
-                
-                with cols[0]:
-                    if friend_info['friend_imagen_deseo1']:
-                        st.image(friend_info['friend_imagen_deseo1'], caption="Deseo #1", use_container_width=True)
-                
-                with cols[1]:
-                    if friend_info['friend_imagen_deseo2']:
-                        st.image(friend_info['friend_imagen_deseo2'], caption="Deseo #2", use_container_width=True)
-                
-                with cols[2]:
-                    if friend_info['friend_imagen_deseo3']:
-                        st.image(friend_info['friend_imagen_deseo3'], caption="Deseo #3", use_container_width=True)
+                    st.markdown("### 📝 Notas Importantes")
+                    st.warning(friend_info['friend_comentarios_generales'])
             
             else:
                 st.warning("Aún no se ha hecho el sorteo, Calma Tigre!.")
