@@ -55,7 +55,7 @@ class LoginPage:
                 return {'is_admin': True, 'username': username}
             
             # Check if regular user
-            user_response = self.supabase.table('users').select('*').eq('character_name', username).eq('password', password).execute()
+            user_response = self.supabase.table('users').select('*').ilike('character_name', username).eq('password', password).execute()
             
             if user_response.data and len(user_response.data) > 0:
                 user = user_response.data[0]

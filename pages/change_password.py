@@ -49,7 +49,7 @@ class ChangePasswordPage:
     def verify_user(self, character_name, email):
         """Verify if character name and email match a user."""
         try:
-            response = self.supabase.table('users').select('*').eq('character_name', character_name).eq('email', email).execute()
+            response = self.supabase.table('users').select('*').ilike('character_name', character_name).eq('email', email).execute()
             if response.data and len(response.data) > 0:
                 return response.data[0]['id']
             return None
