@@ -61,7 +61,7 @@ class LoginPage:
                 user = user_response.data[0]
                 return {
                     'is_admin': False, 
-                    'username': username,
+                    'username': user['character_name'],
                     'character_photo_url': user.get('character_photo_url')
                 }
             
