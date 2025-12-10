@@ -63,6 +63,10 @@ class HomePage:
                 if st.button("Olvidé mi personaje 🔍", use_container_width=True):
                     st.session_state.page = "recover"
                     st.rerun()
+
+                if st.button("Cambiar Contraseña 🔄", use_container_width=True):
+                    st.session_state.page = "change_password"
+                    st.rerun()
             else:
                 # Si el usuario está logueado, mostrar opciones adicionales
                 st.markdown(

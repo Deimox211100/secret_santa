@@ -6,6 +6,7 @@ from pages.profile import ProfilePage
 from pages.secret_friend import FriendPage
 from pages.admin import AdminPage
 from pages.recover import RecoverPage
+from pages.change_password import ChangePasswordPage
 from utils.config_loader import get_current_topic
 
 # Configuración de la página
@@ -75,6 +76,8 @@ def start_page():
             set_page("register")
         if st.button("Olvidé mi personaje 🔍", use_container_width =True):
             set_page("recover")
+        if st.button("Cambiar Contraseña 🔄", use_container_width =True):
+            set_page("change_password")
 
 
 # Función principal de la aplicación
@@ -107,6 +110,9 @@ def main():
     elif st.session_state.page == "recover":
         recover_page = RecoverPage()
         recover_page.run()
+    elif st.session_state.page == "change_password":
+        change_password_page = ChangePasswordPage()
+        change_password_page.run()
 
 
 # Ejecutar la aplicación
