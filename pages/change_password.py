@@ -88,6 +88,8 @@ class ChangePasswordPage:
             if st.session_state.verified_user_id is None:
                 if st.button("Verificar Identidad", use_container_width=True):
                     if character_name and email:
+                        character_name = character_name.strip().lower()
+                        email = email.strip()
                         user_id = self.verify_user(character_name, email)
                         if user_id:
                             st.session_state.verified_user_id = user_id

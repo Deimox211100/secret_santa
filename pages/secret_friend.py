@@ -124,7 +124,14 @@ class FriendPage:
                            st.link_button(f"Ver Referencia del Deseo #{number} 🔗", link)
                        
                        if image:
-                           st.image(image, caption=f"Imagen Referencia #{number}", width=300)
+                           # Validar que sea una URL o archivo existente
+                           try:
+                               st.image(image, caption=f"Imagen Referencia #{number}", width=300)
+                           except Exception as e:
+                               st.warning(f"No se pudo cargar la imagen de referencia. (Error: {str(e)})")
+                               if "http" in str(image):
+                                    st.write(f"Link de la imagen: {image}")
+
                        st.markdown("---")
 
                 # Wish 1

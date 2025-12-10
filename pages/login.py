@@ -98,6 +98,8 @@ class LoginPage:
             # Botón de login
             if st.button("Iniciar Sesión", use_container_width=True):
                 if username and password:
+                    # Clean input
+                    username = username.strip().lower()
                     # Verificar las credenciales
                     result = self.check_credentials(username, password)
                     if result:
